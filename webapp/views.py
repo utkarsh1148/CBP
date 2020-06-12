@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from . models import CCDatails
 from . serializers import CCSerializer
+import json
 
 
 class CCList(APIView):
@@ -16,5 +17,10 @@ class CCList(APIView):
         serializer=CCSerializer(CC1,many=True)
         return Response(serializer.data)
         
-    def post(self):
-        pass
+    def post(self,request):
+        res=json.loads(request.body)
+        print(res)
+        name=res['Name']
+        CC1=CCDatails.objects.filter(Name=name)
+        serializer=CCSerializer(CC1,many=True)
+        return Response(serializer.data)
