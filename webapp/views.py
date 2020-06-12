@@ -8,12 +8,13 @@ from rest_framework import status
 from . models import CCDatails
 from . serializers import CCSerializer
 import json
+from rest_framework.generics import ListAPIView
 
 
 class CCList(APIView):
     
     def get(self,request):
-        CC1=CCDatails.objects.all()
+        CC1=CCDatails.objects.filter(Name='Utkarsh Mishra')
         serializer=CCSerializer(CC1,many=True)
         return Response(serializer.data)
         
@@ -24,6 +25,7 @@ class CCList(APIView):
             name=res['Name']
             CC1=CCDatails.objects.filter(Name=name)
             serializer=CCSerializer(CC1,many=True)
+            return Response(serializer.data)
         else:
             name=res['Name']
             CC1=CCDatails(CreditNum=res['creditnum'],ExipryDate=res['expirydate'],CVV=res['cvv'],Name=name)
@@ -35,4 +37,4 @@ class CCList(APIView):
                     'count': 28
                     }
             serializer = json.dumps(data)
-        return Response(serializer,content_type='application/json')
+            return Response(serializer,content_type='application/json')
