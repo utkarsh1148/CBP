@@ -20,7 +20,19 @@ class CCList(APIView):
     def post(self,request):
         res=json.loads(request.body)
         print(res)
-        name=res['Name']
-        CC1=CCDatails.objects.filter(Name=name)
-        serializer=CCSerializer(CC1,many=True)
-        return Response(serializer.data)
+        if(res['work']=='get'):
+            name=res['Name']
+            CC1=CCDatails.objects.filter(Name=name)
+            serializer=CCSerializer(CC1,many=True)
+        else:
+            name=res['Name']
+            CC1=CCDatails(CreditNum=res['creditnum'],ExipryDate=res['expirydate'],CVV=res['cvv'],Name=name)
+            CC1.save()
+            data = {
+                    'name': 'Vitor',
+                    'location': 'Finland',
+                    'is_active': True,
+                    'count': 28
+                    }
+            serializer = json.dumps(data)
+        return Response(serializer,content_type='application/json')
