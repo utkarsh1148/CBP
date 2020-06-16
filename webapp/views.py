@@ -22,13 +22,13 @@ class CCList(APIView):
         res=json.loads(request.body)
         print(res)
         if(res['work']=='get'):
-            name=res['Name']
-            CC1=CCDatails.objects.filter(Name=name)
+            owner=res['Owner']
+            CC1=CCDatails.objects.filter(Owner=owner)
             serializer=CCSerializer(CC1,many=True)
             return Response(serializer.data)
         else:
             name=res['Name']
-            CC1=CCDatails(CreditNum=res['creditnum'],ExipryDate=res['expirydate'],CVV=res['cvv'],Name=name)
+            CC1=CCDatails(CreditNum=res['creditnum'],ExipryDate=res['expirydate'],CVV=res['cvv'],Name=name,Owner=res['Owner'])
             CC1.save()
             data = {
                     'name': 'Vitor',
