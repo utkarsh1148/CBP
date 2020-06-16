@@ -5,6 +5,7 @@ class CCDatails(models.Model):
     ExipryDate=models.CharField(max_length=5)
     CVV=models.IntegerField()
     Name=models.CharField(max_length=40)
+    Owner=models.CharField(max_length=40)
 
     def __str__(self):
         return self.Name

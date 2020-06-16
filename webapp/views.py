@@ -14,7 +14,7 @@ from rest_framework.generics import ListAPIView
 class CCList(APIView):
     
     def get(self,request):
-        CC1=CCDatails.objects.filter(Name='Utkarsh Mishra')
+        CC1=CCDatails.objects.all()
         serializer=CCSerializer(CC1,many=True)
         return Response(serializer.data)
         
